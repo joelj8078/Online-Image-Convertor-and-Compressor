@@ -1,1 +1,8 @@
-{"joel": "joel", "joel123": "scrypt:32768:8:1$TSrjEq2x16K00VSN$f410352f748913180f59bb4c9f18ae0fb8457917416aa222137b1bca18b8196b87f3549d7b11b53a596074ba4b3aa386a4b8ab003b1527ccdf194ac2d48cff1d"}
+{
+    "joel": "joel",
+    "joel123": "scrypt:32768:8:1$TSrjEq2x16K00VSN$f410352f748913180f59bb4c9f18ae0fb8457917416aa222137b1bca18b8196b87f3549d7b11b53a596074ba4b3aa386a4b8ab003b1527ccdf194ac2d48cff1d",
+    "joeljacob8078@gmail.com": {
+        "password": "$2b$12$Ob/yWRMtZrmQ4/4NXOzfeeTbkRUbZamx8.RvcvhFc1Th5CiuY6t/K",
+        "otp_secret": "G5N7SESEJIVLO4ABLOGLAYPLU7H62MFS"
+    }
+}

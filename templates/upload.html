@@ -17,11 +17,15 @@
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
-        .preview-image {
-            max-width: 100%;
-            height: auto;
-            display: none;
+        .preview-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
             margin-top: 15px;
+        }
+        .preview-image {
+            max-width: 100px;
+            height: auto;
             border-radius: 5px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
         }
@@ -31,7 +35,7 @@
 
     <div class="container">
         <div class="upload-container">
-            <h2 class="text-center">Upload & Convert Image</h2>
+            <h2 class="text-center">Upload & Convert Images</h2>
             
             {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
@@ -48,9 +52,9 @@
 
             <form method="POST" action="{{ url_for('upload') }}" enctype="multipart/form-data">
                 <div class="mb-3">
-                    <label class="form-label">Choose Image</label>
-                    <input type="file" class="form-control" name="file" id="fileInput" required>
-                    <img id="imagePreview" class="preview-image">
+                    <label class="form-label">Choose Images</label>
+                    <input type="file" class="form-control" name="files" id="fileInput" multiple required>
+                    <div class="preview-container" id="previewContainer"></div>
                 </div>
 
                 <div class="mb-3">
@@ -62,11 +66,10 @@
                         <option value="gif">GIF</option>
                         <option value="webp">WEBP</option>
                         <option value="bmp">BMP</option>
-                        <option value="svg">SVG</option>
                     </select>
                 </div>
 
-                <button type="submit" class="btn btn-primary w-100">Convert Image</button>
+                <button type="submit" class="btn btn-primary w-100">Convert Images</button>
             </form>
 
             <div class="text-center mt-3">
@@ -77,16 +80,20 @@
 
     <script>
         document.getElementById("fileInput").addEventListener("change", function(event) {
-            let file = event.target.files[0];
-            if (file) {
+            let files = event.target.files;
+            let previewContainer = document.getElementById("previewContainer");
+            previewContainer.innerHTML = ""; // Clear previous previews
+
+            Array.from(files).forEach(file => {
                 let reader = new FileReader();
                 reader.onload = function(e) {
-                    let preview = document.getElementById("imagePreview");
-                    preview.src = e.target.result;
-                    preview.style.display = "block";
+                    let img = document.createElement("img");
+                    img.src = e.target.result;
+                    img.className = "preview-image";
+                    previewContainer.appendChild(img);
                 };
                 reader.readAsDataURL(file);
-            }
+            });
         });
     </script>
 
