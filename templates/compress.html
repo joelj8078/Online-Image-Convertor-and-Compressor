@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}Compress Images{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2 class="mt-4 text-center">Compress Images</h2>
+    
+    <form action="{{ url_for('compress') }}" method="post" enctype="multipart/form-data" class="mt-4">
+        <div class="mb-3">
+            <label for="files" class="form-label"><strong>Upload Image(s):</strong></label>
+            <input class="form-control" type="file" name="files" id="files" multiple required>
+        </div>
+        
+        <div class="mb-3">
+            <label for="compression" class="form-label"><strong>Select Compression Level:</strong></label>
+            <select class="form-control" name="compression" id="compression">
+                <option value="low">Low (Smallest File Size)</option>
+                <option value="medium" selected>Medium (Balanced)</option>
+                <option value="high">High (Best Quality)</option>
+            </select>
+        </div>
+        
+        <button type="submit" class="btn btn-success w-100">Compress</button>
+    </form>
+
+    {% if compressed_images %}
+        <h3 class="mt-5 text-center">Compressed Images Preview</h3>
+        <div class="row justify-content-center">
+            {% for image in compressed_images %}
+                <div class="col-md-4">
+                    <div class="card shadow-sm p-3 text-center">
+                        <!-- ✅ Fixed Image Path -->
+                        <img src="{{ url_for('static', filename=image.path) }}" alt="Compressed Image" class="img-fluid" style="max-height: 200px;">
+                        <div class="card-body">
+                            <p class="mb-2">
+                                <strong>Original Size:</strong> {{ image.original_size }} KB<br>
+                                <strong>Compressed Size:</strong> {{ image.compressed_size }} KB
+                            </p>
+                            <a href="{{ url_for('static', filename=image.path) }}" download="{{ image.filename }}" class="btn btn-primary">
+                                Download
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

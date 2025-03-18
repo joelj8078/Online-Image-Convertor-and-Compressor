@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+
+{% block title %}Crop Image{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2 class="text-center">Crop Your Image</h2>
+    
+    <!-- Image Upload Section -->
+    <div class="mb-3">
+        <label for="uploadImage" class="form-label">Upload an Image</label>
+        <input type="file" class="form-control" id="uploadImage" accept="image/*">
+    </div>
+
+    <!-- Cropping Area -->
+    <div class="text-center">
+        <div id="imageContainer">
+            <img id="cropperImage" class="img-fluid" style="max-width: 100%; display: none;">
+        </div>
+    </div>
+
+    <!-- Buttons -->
+    <div class="text-center mt-3">
+        <button id="cropButton" class="btn btn-primary" disabled>Crop</button>
+        <button id="resetButton" class="btn btn-secondary">Reset</button>
+    </div>
+
+    <!-- Download Section -->
+    <div class="mt-4 text-center">
+        <h4>Cropped Image</h4>
+        <canvas id="croppedCanvas" style="max-width: 100%;"></canvas>
+        <br>
+        <a id="downloadLink" class="btn btn-success mt-2" style="display: none;">Download Cropped Image</a>
+    </div>
+</div>
+
+<!-- Include Cropper.js -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const uploadImage = document.getElementById("uploadImage");
+        const cropperImage = document.getElementById("cropperImage");
+        const cropButton = document.getElementById("cropButton");
+        const resetButton = document.getElementById("resetButton");
+        const croppedCanvas = document.getElementById("croppedCanvas");
+        const downloadLink = document.getElementById("downloadLink");
+        let cropper;
+
+        uploadImage.addEventListener("change", function (event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    cropperImage.src = e.target.result;
+                    cropperImage.style.display = "block";
+
+                    if (cropper) cropper.destroy();
+                    cropper = new Cropper(cropperImage, {
+                        aspectRatio: NaN, 
+                        viewMode: 2,
+                        background: false
+                    });
+
+                    cropButton.disabled = false;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        cropButton.addEventListener("click", function () {
+            if (cropper) {
+                const croppedImage = cropper.getCroppedCanvas();
+                croppedCanvas.getContext("2d").drawImage(croppedImage, 0, 0);
+                downloadLink.href = croppedImage.toDataURL();
+                downloadLink.download = "cropped-image.png";
+                downloadLink.style.display = "block";
+            }
+        });
+
+        resetButton.addEventListener("click", function () {
+            if (cropper) {
+                cropper.destroy();
+                cropperImage.style.display = "none";
+                uploadImage.value = "";
+                cropButton.disabled = true;
+                downloadLink.style.display = "none";
+            }
+        });
+
+        // Apply Dark Mode Styles to Cropper.js
+        function applyDarkMode() {
+            const isDarkMode = document.body.classList.contains("dark-mode");
+            document.documentElement.style.setProperty('--cropper-bg', isDarkMode ? '#222' : '#fff');
+            document.documentElement.style.setProperty('--cropper-border', isDarkMode ? '#666' : '#ddd');
+        }
+
+        // Listen for dark mode toggle
+        const darkModeToggle = document.getElementById("darkModeToggle");
+        darkModeToggle.addEventListener("click", applyDarkMode);
+        applyDarkMode(); // Apply initial theme
+    });
+</script>
+
+<style>
+    /* Cropper.js Dark Mode Fix */
+    .dark-mode #imageContainer {
+        background: #222;
+        border: 2px solid #666;
+    }
+</style>
+{% endblock %}

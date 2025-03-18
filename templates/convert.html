@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Image Conversion{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2 class="mt-4">Image Conversion</h2>
+    <form action="{{ url_for('convert') }}" method="POST" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label for="files" class="form-label">Upload Images:</label>
+            <input type="file" class="form-control" name="files" multiple required>
+        </div>
+        <div class="mb-3">
+            <label for="format" class="form-label">Select Output Format:</label>
+            <select class="form-select" name="format" required>
+                {% for format in formats %}
+                    <option value="{{ format }}">{{ format.upper() }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Convert</button>
+    </form>
+    <a href="{{ url_for('dashboard') }}" class="btn btn-secondary mt-3">Back to Dashboard</a>
+</div>
+{% endblock %}

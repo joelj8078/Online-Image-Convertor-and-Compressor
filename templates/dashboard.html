@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="container text-center">
+    <h1 class="mt-4">Welcome to Image Processing Dashboard</h1>
+    <p class="lead">Choose an option below:</p>
+
+    <div class="row mt-5 d-flex justify-content-center">
+        <!-- Convert Images Section -->
+        <div class="col-md-4 mb-4">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h3 class="card-title"><i class="fas fa-sync-alt"></i> Convert Images</h3>
+                    <p class="card-text">Convert images to different formats.</p>
+                    <a href="{{ url_for('convert') }}" class="btn btn-primary">
+                        <i class="fas fa-exchange-alt"></i> Go to Convert
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Compress Images Section -->
+        <div class="col-md-4 mb-4">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h3 class="card-title"><i class="fas fa-compress"></i> Compress Images</h3>
+                    <p class="card-text">Reduce image size without losing quality.</p>
+                    <a href="{{ url_for('compress') }}" class="btn btn-success">
+                        <i class="fas fa-compress"></i> Go to Compress
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Crop Images Section -->
+        <div class="col-md-4 mb-4">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h3 class="card-title"><i class="fas fa-crop-alt"></i> Crop Images</h3>
+                    <p class="card-text">Crop images with preset or custom ratios.</p>
+                    <a href="{{ url_for('crop') }}" class="btn btn-warning">
+                        <i class="fas fa-crop"></i> Go to Crop
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

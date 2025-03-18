@@ -1,5 +1,61 @@
-.container {
-    max-width: 400px;
-    margin: auto;
-    padding-top: 20px;
+.button-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 20px;
 }
+
+.dashboard-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 180px;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none;
+    color: white;
+    border-radius: 8px;
+    transition: 0.3s ease-in-out;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: none;
+}
+
+.dashboard-btn img {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+}
+
+.convert-btn {
+    background-color: #007bff;
+}
+
+.compress-btn {
+    background-color: #28a745;
+}
+
+.crop-btn {
+    background-color: #ff9800;
+}
+
+.dashboard-btn:hover {
+    transform: scale(1.05);
+    opacity: 0.9;
+}
+
+.dashboard-icon {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 10px;
+}
+
+.card {
+    transition: transform 0.2s ease-in-out;
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
+
